@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>stcamera_launcher</name>
+  <version>1.0.1</version>
+  <description>
+    stcamera_launcher package contains a basic functionality to access OMRON SENTECH Camera. 
+    This package requires installation of SentechSDK.
+  </description>
+  <maintainer email="support-ros@sentech.co.jp">OSE ROS Support</maintainer>
+  <license>BSD</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <build_depend>rclcpp</build_depend>
+  <build_depend>rclcpp_components</build_depend>
+  <build_depend>rcutils</build_depend>
+  <build_depend>stcamera_components</build_depend>
+
+  <build_depend>image_transport</build_depend>
+  <build_depend>camera_info_manager</build_depend>
+
+  <exec_depend>rclcpp</exec_depend>
+  <exec_depend>rclcpp_components</exec_depend>
+  <exec_depend>rcutils</exec_depend>
+  <exec_depend>stcamera_components</exec_depend>
+
+  <exec_depend>image_transport</exec_depend>
+  <exec_depend>camera_info_manager</exec_depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <test_depend>launch</test_depend>
+  <test_depend>launch_testing</test_depend>
+  <test_depend>launch_testing_ros</test_depend>
+  <test_depend>launch_testing_ament_cmake</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

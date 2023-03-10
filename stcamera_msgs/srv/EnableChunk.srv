@@ -1,0 +1,4 @@
+string  chunk_name      # Name of the chunk node
+bool    value           # true to enable, false to disable
+---
+stcamera_msgs/ErrorInfo error_info # Error information

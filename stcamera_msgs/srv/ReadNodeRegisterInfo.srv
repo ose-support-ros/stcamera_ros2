@@ -1,0 +1,6 @@
+string  genicam_module   # Name of the module
+string  genicam_node     # Name of the GenICam node
+---
+stcamera_msgs/ErrorInfo error_info # Error information
+int64	address		 # start address
+int64	length		 # length of the data to read

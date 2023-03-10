@@ -1,0 +1,6 @@
+string  genicam_module   # Name of the module
+string  genicam_node     # Name of the GenICam node
+---
+stcamera_msgs/ErrorInfo error_info # Error information
+string  value_str     # Retrieved symbolic name of the current enumeration value
+int64   value_int     # Integer value of the symbolic name

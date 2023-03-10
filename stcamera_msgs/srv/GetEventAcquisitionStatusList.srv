@@ -1,0 +1,6 @@
+---
+stcamera_msgs/ErrorInfo error_info # Error information
+string[] genicam_module_list   # List of the module
+
+bool[] enabled_list         # True if the corresponding module event acquisition
+                            # is enabled. False otherwise.

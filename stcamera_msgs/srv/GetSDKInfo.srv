@@ -1,0 +1,7 @@
+---
+stcamera_msgs/ErrorInfo error_info # Error information
+string sdk_version                              # Version of the SentechSDK used
+                                                # by this package
+
+stcamera_msgs/GenTLInfo[] gentl_info_list # List of GenTL producer
+                                                # used by the SentechSDK

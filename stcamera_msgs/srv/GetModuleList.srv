@@ -1,0 +1,4 @@
+---
+stcamera_msgs/ErrorInfo error_info # Error information
+string[] genicam_module_list   # List of module (System, Interface, LocalDevice,
+                            # RemoteDevice, DataStream)

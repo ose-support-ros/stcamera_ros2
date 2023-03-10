@@ -1,0 +1,8 @@
+string      genicam_module           # Name of the module
+string      genicam_node             # Name of the node
+---
+stcamera_msgs/ErrorInfo error_info # Error information
+string[]    enum_value_str_list   # List of retrieved enumeration symbolic value
+string[]    enum_node_list        # List of enum entry node
+int64[]     enum_value_int_list   # List of the integer value corresponding to
+                                  # the enumeration symbolic value

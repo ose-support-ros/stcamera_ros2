@@ -1,0 +1,5 @@
+string genicam_module    # Name of the module
+---
+stcamera_msgs/ErrorInfo error_info # Error information
+stcamera_msgs/GenICamEvent[] event_node_list  # List of all available 
+                                                    # GenICam node event

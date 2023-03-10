@@ -1,0 +1,133 @@
+/******************************************************************************
+ * Software License Agreement (BSD License)
+ *
+ * Copyright (C) 2023, OMRON SENTECH. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *   * Redistributions of source code must retain the above copyright notice,
+ *   this list of conditions and the following disclaimer.
+ *   * Redistributions in binary form must reproduce the above copyright
+ *   notice, this list of conditions and the following disclaimer in the
+ *   documentation and/or other materials provided with the distribution.
+ *   * Neither the names of OMRON SENTECH nor the names of its
+ *   contributors may be used to endorse or promote products derived from
+ *   this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *****************************************************************************/
+
+/** \file stcamera_interface.hpp
+ *  \brief Base class to control a connected camera
+ *
+ *  This is a base class to control a connected camera, including callback
+ *  for services. 
+ */
+
+#ifndef STCAMERA_STCAMERA_INTERFACE_H
+#define STCAMERA_STCAMERA_INTERFACE_H
+
+#include <mutex>
+#include <rclcpp/rclcpp.hpp>
+#include <image_transport/image_transport.hpp>
+#include <camera_info_manager/camera_info_manager.hpp>
+#include <sensor_msgs/image_encodings.hpp>
+
+#include "stparameter.hpp"
+#include "stheader.hpp"
+#include "stcamera_msgs.hpp"
+
+namespace stcamera
+{
+/** Macro for failure callback. */
+#define RETURN_ERR_RES(X, MSG, RES) \
+  { std::stringstream ss_error; ss_error << __FILE__ << " " << __func__ << " " << __LINE__ << ":" << getTextForMsg().c_str() << " error: " << MSG; \
+  RCLCPP_ERROR(get_logger(), ss_error.str().c_str()); \
+  RES->error_info.error_code = X; RES->error_info.description = ss_error.str(); return(false);}
+#define RETURN_SUCCESS(RES) \
+  RES->error_info.error_code = OSError_Success;  \
+  return(true);
+  //RES->error_info.description = "";
+/** Macro for checking null. */
+#define CHECK_NULLPTR_RES(P, X, MSG, RES) if (nullptr == P) \
+  { RETURN_ERR_RES(X, MSG, RES); } 
+
+  class StCameraInterface;
+
+  /** Map key: camera namespace; value: a pointer to StCameraInterface 
+   * instance that control the camera. */
+  typedef std::map<std::string, StCameraInterface*> MapCameraInterface; 
+
+
+  /** Map key: topic name; value: the publisher correspond to the topic name */
+  typedef std::map<std::string, rclcpp::Publisher<stcamera_msgs::msg::Event>::SharedPtr> MapPublisher;
+
+  /** \class StCameraInterface
+   *  \brief Base class to control a connected camera
+   *
+   *  This is a base class to control a connected camera, including callback
+   *  for services. 
+   */ 
+  class StCameraInterface
+  {
+    public:
+
+      /** Constructor.
+       *
+       * \param[in] dev Pointer to the IStDeviceReleasable of the device.
+       * \param[in] nh_parent The main ROS node handle.
+       * \param[in] camera_namespace The namespace for the device.
+       * \param[in] param Pointer to the StParameter class instance.
+       * \param[in] queue_size Used for initializing publisher (Maximum number 
+       *            of outgoing messages to be queued for delivery to 
+       *            subscribers). Default is set to #STCAMERA_QUEUE_SIZE 
+       */
+      StCameraInterface(rclcpp::Node *nh_parent, 
+                        const std::string &camera_namespace, 
+                        StParameter *param,
+                        rclcpp::Clock &clock);
+
+      /** Destructor.
+       *
+       * All event node callbacks are deregistered and the callbacks are
+       * released here. 
+       */
+      virtual ~StCameraInterface();
+
+      /** Check if the device is disconnected.
+       * \return True if device is already disconnected. False otherwise.
+       */
+      virtual bool deviceIsLost() = 0;
+
+    protected:
+      const std::string &getTextForMsg() const {return(camera_namespace_);}
+
+      std::shared_ptr<rclcpp::Node> nh_;
+
+      /** Node handle. */
+      rclcpp::Node *parent_nh_; 
+
+      /** Namespace of the camera. The namespace is generated by using 
+       * StParameter::getNamespace() function.
+       */
+      const std::string camera_namespace_;
+
+      /** Pointer to the instance of StParameter. */
+      StParameter *param_;
+
+      rclcpp::Clock &clock_;
+
+      rclcpp::Logger get_logger() const{return(parent_nh_->get_logger());}
+  };
+}
+#endif

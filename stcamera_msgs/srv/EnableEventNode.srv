@@ -1,0 +1,14 @@
+string genicam_module        # Name of the module
+string event_name          # Name of the GenICam event. 
+                          # The list of the available node name can be obtained
+                          # through service get_event_node_status_list
+
+string callback_node      # Name of the callback node. The event data will be
+                          # published when the callback node data is updated
+
+string event_topic_name   # Custom name for the event topic. Leave empty to
+                          # use the default event topic of the camera
+
+bool value                # true to enable, false to disable
+---
+stcamera_msgs/ErrorInfo error_info # Error information

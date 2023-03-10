@@ -1,0 +1,43 @@
+# Camera parameters
+/**:
+  ros__parameters:
+    # values (case sensitive):
+    #   ["all"]                : connect to all detected camera
+    #   [<MODEL(SERIAL)>, ...] : connect to only the specified camera with 
+    #                          <MODEL(SERIAL)>. Model with serial number SN
+    #   [<ID>, ...]          : connect to only the specified camera with ID of ID 
+    #                          (U3V GUID or hardware address of GigEVision camera)
+    # default value is empty (not specified).
+    #
+    # To connect to multiple cameras, separate the values with whitespace.
+    # If no value is specified, the first found camera will be used and the 
+    # camera ID is used as camera namespace to identify the camera.
+    # If any value is specified, the specified name (either Model(SN) or ID) is used
+    # as camera namespace to identify the camera.
+    #
+    # The format of the camera namespace for the topics and services correspond to
+    # the connected camera is as follows:
+    # dev_{device_id} or dev_{camera_model_serial_}, where:
+    # {device_id} or {camera_model_serial_} are either camera ID or MODEL(SERIAL)
+    # with non-alphanumeric characters replaced with underscore "_".
+    # 
+    # Example usage:
+    # camera_to_connect: ["all"]
+    # #namespace would be dev_{device_id} of the connected camera.
+    #
+    # camera_to_connect: ["STC-MCS510U3V(00C0XXX)", "STC_SCS241POE(15DBXXX)"]
+    # #namespace would be: dev_STC_MCS510U3V_00C0XXX_ and STC_SCS241POE_15DBXXX_
+    #
+    # camera_to_connect: ["142100030510", "00:11:1c:f6:yy:xx"]
+    # #namespace would be: dev_142100030510 and dev_00_11_1c_f6_yy_xx
+    #
+    # camera_to_connect: ["STC-MCS510U3V(00C0XX)", "00:11:1c:f6:yy:xx"]
+    # #namespace would be: dev_STC_MCS510U3V_00C0XXX_ and dev_00_11_1c_f6_yy_xx
+    camera_to_connect: ["all"]
+    #camera_to_connect: ["1421010001"]
+
+    # logger_level: value
+    # value: Logger level of the main and camera nodes.
+    #        Debug(10), Info(20), Warn(30), Error(40), Fatal(50)
+    logger_level: 20
+   

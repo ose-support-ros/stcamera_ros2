@@ -1,0 +1,3 @@
+---
+stcamera_msgs/ErrorInfo error_info # Error information
+bool value    # true if acquisition is on going. False if acquisition is stopped
