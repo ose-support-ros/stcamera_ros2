@@ -6,7 +6,7 @@ from stcamera_msgs.msg import *
 from stcamera_msgs.srv import *
 from sensor_msgs.msg import Image
 
-NODE_NAMESPACE_NAME="/stcamera_launcher"
+NODE_NAMESPACE_NAME="/stcamera_launch"
 NODE_NAME = "/stcameras"
 TRIGGER_SELECTOR = "FrameStart"
 TRIGGER_SOURCE = "Software"

@@ -32,7 +32,7 @@
 #include "../include/stcamera.hpp"
 #include "../include/stmanager.hpp"
 
-#define NODE_NAMESPACE_NAME "/stcamera_launcher"
+#define NODE_NAMESPACE_NAME "/stcamera_launch"
 #define NODE_NAME "/stcameras"
 
 using namespace stcamera;

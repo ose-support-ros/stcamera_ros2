@@ -46,13 +46,13 @@ StCameraNodeは、下記のいずれかのコマンドで生成できます。
 
 ``$ source install/setup.bash``
 
-``$ ros2 launch stcamera_launcher stcamera_launcher.py``
+``$ ros2 launch stcamera_launch stcamera_launch.py``
 
 又は
 
 ``$ source install/setup.bash``
 
-``$ ros2 component standalone --node-name 'stcameras' --node-namespace '/stcamera_launcher' stcamera_components stcamera::StCameraNode``
+``$ ros2 component standalone --node-name 'stcameras' --node-namespace '/stcamera_launch' stcamera_components stcamera::StCameraNode``
 
 又は
 
@@ -60,10 +60,10 @@ StCameraNodeは、下記のいずれかのコマンドで生成できます。
 
 ``$ ros2 run rclcpp_components component_container``
 
-``$ ros2 component load /ComponentManager  -n 'stcameras' --node-namespace '/stcamera_launcher' stcamera_components stcamera::StCameraNode``
+``$ ros2 component load /ComponentManager  -n 'stcameras' --node-namespace '/stcamera_launch' stcamera_components stcamera::StCameraNode``
 
 2番目、3番目の方法で記載されているノード名やネームスペースの指定はオプションですが、上記のように指定しておくことで、サンプルプログラムを動作させることができるようになります。
-StCameraNodeをstcamera_launcherファイルスクリプトで起動するとカメラ接続パラメータがstcamera_node.yamlで簡単に設定できます。 パラメータ設定の詳細は次の章を参照下さい。
+StCameraNodeをstcamera_launchファイルスクリプトで起動するとカメラ接続パラメータがstcamera_node.yamlで簡単に設定できます。 パラメータ設定の詳細は次の章を参照下さい。
 
 ### 3.1. ノードパラメータ
 パラメータの値は大文字と小文字を区別します。設定できるパラメータは下記の通りです。
@@ -142,7 +142,7 @@ StCameraNodeが提供するサービスは下記の通りです。
 
 * 画像取得中にはアクセスできないGenICamノードがあります（エラー発生）。その際には画像の取得を停止にしてから再度アクセスして下さい。サービスコール**enable_image_acquisition**で画像取得停止ができます。例：<br />
 
-``$ ros2 service call /stcamera_launcher/dev_CAMERA-NS/enable_image_acquisition stcamera_msgs/srv/EnableImageAcquisition "{value: false}"``
+``$ ros2 service call /stcamera_launch/dev_CAMERA-NS/enable_image_acquisition stcamera_msgs/srv/EnableImageAcquisition "{value: false}"``
 
 <pre>
 waiting for service to become available...
@@ -154,7 +154,7 @@ stcamera_msgs.srv.EnableImageAcquisition_Response()
 
 * IntegerタイプのGenICamノードは設定できる値に制限がある場合があります。下記の設定値ではincrementが16になっているため、増減させる際の値がその倍数になっていない場合にはエラーが発生します。<br />
 
-``$ ros2 service call /stcamera_launcher/dev_CAMERA-NS/get_genicam_node_info stcamera_msgs/srv/GetGenICamNodeInfo "{genicam_module: 'RemoteDevice', genicam_node: 'Width'}"``
+``$ ros2 service call /stcamera_launch/dev_CAMERA-NS/get_genicam_node_info stcamera_msgs/srv/GetGenICamNodeInfo "{genicam_module: 'RemoteDevice', genicam_node: 'Width'}"``
 
 <pre>
 requester: making request: stcamera_msgs.srv.GetGenICamNodeInfo_Request(genicam_module='RemoteDevice', genicam_node='Width')
@@ -194,7 +194,7 @@ stcamera_msgs.srv.GetGenICamNodeInfo_Response(name='Width', description='Width o
 
 ``$ source install/setup.bash``
 
-``$ ros2 launch stcamera_launcher stcamera_launcher.py``
+``$ ros2 launch stcamera_launch stcamera_launch.py``
 
 * 現在発行されているトピックの名前を確認します。
 
@@ -216,7 +216,7 @@ stcamera_msgs.srv.GetGenICamNodeInfo_Response(name='Width', description='Width o
 
 * GenICamノード”Gain”の情報を取得します。
 
-``$ ros2 service call /stcamera_launcher/dev_142100000000/get_genicam_node_info stcamera_msgs/srv/GetGenICamNodeInfo '{genicam_module: "RemoteDevice", genicam_node: "Gain"}'``
+``$ ros2 service call /stcamera_launch/dev_142100000000/get_genicam_node_info stcamera_msgs/srv/GetGenICamNodeInfo '{genicam_module: "RemoteDevice", genicam_node: "Gain"}'``
 
 <pre>
 waiting for service to become available...
@@ -228,7 +228,7 @@ stcamera_msgs.srv.GetGenICamNodeInfo_Response(error_info=stcamera_msgs.msg.Error
 
 * GenICamノード”Gain”(IFloat型)の値を読み込みます。<br />
 
-``$ ros2 service call /stcamera_launcher/dev_142100000000/read_node_float stcamera_msgs/srv/ReadNodeFloat '{genicam_module: "RemoteDevice", genicam_node: "Gain"}'``<br /> 
+``$ ros2 service call /stcamera_launch/dev_142100000000/read_node_float stcamera_msgs/srv/ReadNodeFloat '{genicam_module: "RemoteDevice", genicam_node: "Gain"}'``<br /> 
 
 <pre>
 waiting for service to become available...
@@ -240,7 +240,7 @@ stcamera_msgs.srv.ReadNodeFloat_Response(error_info=stcamera_msgs.msg.ErrorInfo(
 
 * GenICamノード”Gain”(IFloat型)を100に設定します。<br />
 
-``$ ros2 service call /stcamera_launcher/dev_142100000000/write_node_float stcamera_msgs/srv/WriteNodeFloat '{genicam_module: "RemoteDevice", genicam_node: "Gain", value: 100}'``<br /> 
+``$ ros2 service call /stcamera_launch/dev_142100000000/write_node_float stcamera_msgs/srv/WriteNodeFloat '{genicam_module: "RemoteDevice", genicam_node: "Gain", value: 100}'``<br /> 
 
 <pre>
 requester: making request: stcamera_msgs.srv.WriteNodeFloat_Request(genicam_module='RemoteDevice', genicam_node='Gain', value=100.0)
@@ -250,7 +250,7 @@ stcamera_msgs.srv.WriteNodeFloat_Response(error_info=stcamera_msgs.msg.ErrorInfo
 </pre>
 
 ### 4.2. フリーランまたはトリガーモードで画像を取得する
-exampleフォルダにあるノード「grabber」はStCameraNodeを使用して、画像データを取得します。C++版とPython版があり、C++版はサービスやトピックの動作確認を兼ねたコードになっており、様々なサービスやトピックに対応しています。
+stcamera_demosフォルダにあるノード「grabber」はStCameraNodeを使用して、画像データを取得します。C++版とPython版があり、C++版はサービスやトピックの動作確認を兼ねたコードになっており、様々なサービスやトピックに対応しています。
 
 ## 5. サポートについて
 オムロンセンテック株式会社では本パッケージに関する直接的なサポートは行っておりません。ご質問や不具合等に付きましては、GitHubのisuuesを活用してください。

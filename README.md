@@ -47,13 +47,13 @@ A StCameraNode can be generated with one of the following commands:
 
 ``$ source install/setup.bash``
 
-``$ ros2 launch stcamera_launcher stcamera_launcher.py``
+``$ ros2 launch stcamera_launch stcamera_launch.py``
 
 or
 
 ``$ source install/setup.bash``
 
-``$ ros2 component standalone --node-name 'stcameras' --node-namespace '/stcamera_launcher' stcamera_components stcamera::StCameraNode``
+``$ ros2 component standalone --node-name 'stcameras' --node-namespace '/stcamera_launch' stcamera_components stcamera::StCameraNode``
 
 or
 
@@ -61,10 +61,10 @@ or
 
 ``$ ros2 run rclcpp_components component_container``
 
-``$ ros2 component load /ComponentManager  -n 'stcameras' --node-namespace '/stcamera_launcher' stcamera_components stcamera::StCameraNode``
+``$ ros2 component load /ComponentManager  -n 'stcameras' --node-namespace '/stcamera_launch' stcamera_components stcamera::StCameraNode``
 
 The node names and name spaces listed in the second and third methods are optional, but you can make the sample program work by specifying them as above.
-If you start StCameraNode with the stcamera_launcher file script, you can easily set camera connection parameters in stcamera_node.yaml. See the next chapter for details on setting parameters.
+If you start StCameraNode with the stcamera_launch file script, you can easily set camera connection parameters in stcamera_node.yaml. See the next chapter for details on setting parameters.
 
 ### 3.1. Node Parameters
 Parameter values are case sensitive. The parameters that can be set are as follows.
@@ -144,7 +144,7 @@ Attention:
 
 * Some GenICam nodes are not accessible during image acquisition (error occurred). In that case, please stop the image acquisition and access again. You can stop image acquisition with the service call **enable_image_acquisition**. For example:<br />
 
-``$ ros2 service call /stcamera_launcher/dev_CAMERA-NS/enable_image_acquisition stcamera_msgs/srv/EnableImageAcquisition "{value: false}"``
+``$ ros2 service call /stcamera_launch/dev_CAMERA-NS/enable_image_acquisition stcamera_msgs/srv/EnableImageAcquisition "{value: false}"``
 
 <pre>
 waiting for service to become available...
@@ -156,7 +156,7 @@ stcamera_msgs.srv.EnableImageAcquisition_Response()
 
 * Integer-type GenICam nodes may have limited values that can be set. For the settings below, increment is set to 16, so if the value to be increased or decreased is not a multiple of that, an error occurs.<br />
 
-``$ ros2 service call /stcamera_launcher/dev_CAMERA-NS/get_genicam_node_info stcamera_msgs/srv/GetGenICamNodeInfo "{genicam_module: 'RemoteDevice', genicam_node: 'Width'}"``
+``$ ros2 service call /stcamera_launch/dev_CAMERA-NS/get_genicam_node_info stcamera_msgs/srv/GetGenICamNodeInfo "{genicam_module: 'RemoteDevice', genicam_node: 'Width'}"``
 
 <pre>
 requester: making request: stcamera_msgs.srv.GetGenICamNodeInfo_Request(genicam_module='RemoteDevice', genicam_node='Width')
@@ -196,7 +196,7 @@ stcamera_msgs.srv.GetGenICamNodeInfo_Response(name='Width', description='Width o
 
 ``$ source install/setup.bash``
 
-``$ ros2 launch stcamera_launcher stcamera_launcher.py``
+``$ ros2 launch stcamera_launch stcamera_launch.py``
 
 * Check the name of the current published topic.
 
@@ -218,7 +218,7 @@ stcamera_msgs.srv.GetGenICamNodeInfo_Response(name='Width', description='Width o
 
 * Get information for GenICam node "Gain".
 
-``$ ros2 service call /stcamera_launcher/dev_142100000000/get_genicam_node_info stcamera_msgs/srv/GetGenICamNodeInfo '{genicam_module: "RemoteDevice", genicam_node: "Gain"}'``
+``$ ros2 service call /stcamera_launch/dev_142100000000/get_genicam_node_info stcamera_msgs/srv/GetGenICamNodeInfo '{genicam_module: "RemoteDevice", genicam_node: "Gain"}'``
 
 <pre>
 waiting for service to become available...
@@ -230,7 +230,7 @@ stcamera_msgs.srv.GetGenICamNodeInfo_Response(error_info=stcamera_msgs.msg.Error
 
 * Reads the value of the GenICam node "Gain" (of type IFloat).<br />
 
-``$ ros2 service call /stcamera_launcher/dev_142100000000/read_node_float stcamera_msgs/srv/ReadNodeFloat '{genicam_module: "RemoteDevice", genicam_node: "Gain"}'``<br /> 
+``$ ros2 service call /stcamera_launch/dev_142100000000/read_node_float stcamera_msgs/srv/ReadNodeFloat '{genicam_module: "RemoteDevice", genicam_node: "Gain"}'``<br /> 
 
 <pre>
 waiting for service to become available...
@@ -242,7 +242,7 @@ stcamera_msgs.srv.ReadNodeFloat_Response(error_info=stcamera_msgs.msg.ErrorInfo(
 
 * Set the GenICam node "Gain" (type IFloat) to 100.<br />
 
-``$ ros2 service call /stcamera_launcher/dev_142100000000/write_node_float stcamera_msgs/srv/WriteNodeFloat '{genicam_module: "RemoteDevice", genicam_node: "Gain", value: 100}'``<br /> 
+``$ ros2 service call /stcamera_launch/dev_142100000000/write_node_float stcamera_msgs/srv/WriteNodeFloat '{genicam_module: "RemoteDevice", genicam_node: "Gain", value: 100}'``<br /> 
 
 <pre>
 requester: making request: stcamera_msgs.srv.WriteNodeFloat_Request(genicam_module='RemoteDevice', genicam_node='Gain', value=100.0)
@@ -252,7 +252,7 @@ stcamera_msgs.srv.WriteNodeFloat_Response(error_info=stcamera_msgs.msg.ErrorInfo
 </pre>
 
 ### 4.2. Get images in free run or trigger mode
-The node "grabber" in the example folder uses the StCameraNode to retrieve the image data. There are C++ and Python versions, and the C++ version is code that doubles as a test of how services and topics work, covering a variety of services and topics.
+The node "grabber" in the stcamera_demos folder uses the StCameraNode to retrieve the image data. There are C++ and Python versions, and the C++ version is code that doubles as a test of how services and topics work, covering a variety of services and topics.
 
 ## 5. About Support
 OMRON SENTECH does not provide direct support for this package. For questions, glitches, etc., please utilize the issuues on GitHub.

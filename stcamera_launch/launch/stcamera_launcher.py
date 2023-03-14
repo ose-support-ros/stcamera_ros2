@@ -17,7 +17,7 @@ def generate_launch_description():
     respawn = False
 
     default_config_file = os.path.join(
-        get_package_share_directory('stcamera_launcher'),
+        get_package_share_directory('stcamera_launch'),
         'config',
         'default.yaml'
     )
@@ -35,7 +35,7 @@ def generate_launch_description():
     )
     declare_namespace_value_cmd = DeclareLaunchArgument(
         'namespace_value',
-        default_value='stcamera_launcher',
+        default_value='stcamera_launch',
         description='Namespace.'
     )
     declare_node_name_cmd = DeclareLaunchArgument(
@@ -55,9 +55,9 @@ def generate_launch_description():
 
     # node
     stcamera_node = Node(
-        package='stcamera_launcher',        
+        package='stcamera_launch',        
         namespace=namespace_value,
-        executable='stcamera_launcher',
+        executable='stcamera_launch',
         name=node_name,
         output='screen',
         respawn=respawn,
