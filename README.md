@@ -10,58 +10,74 @@ You can use ROS2 topics and services to retrieve images from the camera, configu
 This package has been tested on ROS2-Humble Hawksbill (Ubuntu 22.04 64bit).
 This package uses SentechSDK (v 1.2.1 or later), so please install SentechSDK before installing this package. If you are new to the SetenchSDK, you can check out the documentation that comes with the SentechSDK and make sure that the SentechSDK's Viewer (StViewer) can capture images from your camera to make the rest of the process go smoothly. Also, if you use StViewer to change a camera's settings in advance and then use UserSetSave/UserSetDefault to save those settings to the camera, you may not need to set the camera in ROS2. You can download the SentechSDK from the following URL:
 
-https://sentech.co.jp/en/data/.
+[SentechSDK download site](https://sentech.co.jp/en/data/)
 
 For more information about how to install and use the SentechSDK, see the documentation that accompanies the SentechSDK.
  If the environment variables for using the SentechSDK are not set, run the following command (if you installed the SentechSDK in/opt/sentech):
 
- ``$ source /opt/sentech/.stprofile``
+```
+source /opt/sentech/.stprofile
+```
 
  If the ROS2 environment has not been set, execute the following command:
 
- ``$ source /opt/ros/humble/setup.bash``
+```
+source /opt/ros/humble/setup.bash
+```
 
  Create a workspace (for example, ~/dev_ws) and move it to the current directory.
 
- ``$ mkdir -p ~/dev_ws/src``
-
- ``$ cd ~/dev_ws/src``
+```
+mkdir -p ~/dev_ws/src
+cd ~/dev_ws/src
+```
 
  Clone the stcamera_ros2 project.
 
- ``$ git clone https://github.com/ose-support-ros/stcamera_ros2.git -b humble``
+```
+git clone https://github.com/ose-support-ros/stcamera_ros2.git -b humble
+```
 
  Check dependencies and install required packages.
 
- ``$ cd ~/dev_ws``
-
- ``$ rosdep install -i --from-path src --rosdistro humble -y``
+```
+cd ~/dev_ws
+rosdep install -i --from-path src --rosdistro humble -y
+```
 
  Build.
 
- ``$ colcon build``
+```
+colcon build
+```
 
 ## 3. StCameraNode
 Generating a StCameraNode in the package will start getting images from the specified camera according to the parameter **camera_to_connect**.
 A StCameraNode can be generated with one of the following commands:
 
-``$ source install/setup.bash``
-
-``$ ros2 launch stcamera_launch stcamera_launch.py``
-
-or
-
-``$ source install/setup.bash``
-
-``$ ros2 component standalone --node-name 'stcameras' --node-namespace '/stcamera_launch' stcamera_components stcamera::StCameraNode``
+```
+source install/setup.bash
+ros2 launch stcamera_launch stcamera_launch.py
+```
 
 or
 
-``$ source install/setup.bash``
+```
+source install/setup.bash
+ros2 component standalone --node-name 'stcameras' --node-namespace '/stcamera_launch' stcamera_components stcamera::StCameraNode
+```
 
-``$ ros2 run rclcpp_components component_container``
+or
 
-``$ ros2 component load /ComponentManager  -n 'stcameras' --node-namespace '/stcamera_launch' stcamera_components stcamera::StCameraNode``
+```
+source install/setup.bash
+ros2 run rclcpp_components component_container
+```
+
+```
+source install/setup.bash
+ros2 component load /ComponentManager  -n 'stcameras' --node-namespace '/stcamera_launch' stcamera_components stcamera::StCameraNode``
+```
 
 The node names and name spaces listed in the second and third methods are optional, but you can make the sample program work by specifying them as above.
 If you start StCameraNode with the stcamera_launch file script, you can easily set camera connection parameters in stcamera_node.yaml. See the next chapter for details on setting parameters.
@@ -73,17 +89,17 @@ Parameter values are case sensitive. The parameters that can be set are as follo
 
 Examples:
 
-    * ``camera_to_connect:[]``: The first camera detected is used.
-    * ``camera_to_connect:["all"]``: All detected cameras are used.
-    * ``camera_to_connect:["00:11:1c:f6:yy:xx","STC-MCS510U3V(00XXYY0)"]``: Only GigEVision camera with MAC address "00:11:1c:f6:yy:xx" and USB3 Vision camera of which model is "STC-MCS510U3V", with serial number "00XXYY0" will be used.
-    * ``camera_to_connect:["14210003XXYY"]``: A camera with ID "14210003 XXYY" will be used.
+* **camera_to_connect: []**: The first camera detected is used.
+* **camera_to_connect: ["all"]**: All detected cameras are used.
+* **camera_to_connect: ["00:11:1c:f6:yy:xx","STC-MCS510U3V(00XXYY0)"]**: Only GigEVision camera with MAC address "00:11:1c:f6:yy:xx" and USB3 Vision camera of which model is "STC-MCS510U3V", with serial number "00XXYY0" will be used.
+* **camera_to_connect: ["14210003XXYY"]**: A camera with ID "14210003 XXYY" will be used.
 
 ### 3.2. Camera Namespace
 StCameraNode declares a topic and service for each camera. Each camera's namespace used to access individual camera topics and services is automatically generated using the following rules:
 
-* If **camera_to_connect** is empty or "all," the format of the namespace is *dev\_{CAMERA\_ID}*. *{CAMERA\_ID}* is the ID of the camera. If the connected camera ID is "14210003 xxYY", the namespace will be "dev_14210003xxYY". Non-alphanumeric characters in the camera ID, such as GigEVision's MAC address, will be replaced with underscores.
+* If **camera_to_connect** is empty or "all," the format of the namespace is dev\_{CAMERA\_ID}. {CAMERA\_ID} is the ID of the camera. If the connected camera ID is "14210003 xxYY", the namespace will be "dev_14210003xxYY". Non-alphanumeric characters in the camera ID, such as GigEVision's MAC address, will be replaced with underscores.
 
-* If **camera_to_connect** is CAMERA\_MODEL(SERIAL) or CAMERA\_ID, the namespace will be of the form *dev\_{CAMERA\_MODEL\_SERIAL\_}* or *dev\_{CAMERA\_ID}*. *{CAMERA\_MODEL\_SERIAL\_}* is a rewritten string from CAMERA_MODEL(SERIAL). *{CAMERA\_ID}* is the camera ID. Non-alphanumeric characters are replaced with underscores.
+* If **camera_to_connect** is CAMERA\_MODEL(SERIAL) or CAMERA\_ID, the namespace will be of the form dev\_{CAMERA\_MODEL\_SERIAL\_} or dev\_{CAMERA\_ID}. {CAMERA\_MODEL\_SERIAL\_} is a rewritten string from CAMERA_MODEL(SERIAL). {CAMERA\_ID} is the camera ID. Non-alphanumeric characters are replaced with underscores.
 
 ### 3.3. Published Topics
 Topics published by StCameraNode include:
@@ -144,7 +160,9 @@ Attention:
 
 * Some GenICam nodes are not accessible during image acquisition (error occurred). In that case, please stop the image acquisition and access again. You can stop image acquisition with the service call **enable_image_acquisition**. For example:<br />
 
-``$ ros2 service call /stcamera_launch/dev_CAMERA-NS/enable_image_acquisition stcamera_msgs/srv/EnableImageAcquisition "{value: false}"``
+```
+ros2 service call /stcamera_launch/dev_CAMERA-NS/enable_image_acquisition stcamera_msgs/srv/EnableImageAcquisition "{value: false}"
+```
 
 <pre>
 waiting for service to become available...
@@ -156,7 +174,9 @@ stcamera_msgs.srv.EnableImageAcquisition_Response()
 
 * Integer-type GenICam nodes may have limited values that can be set. For the settings below, increment is set to 16, so if the value to be increased or decreased is not a multiple of that, an error occurs.<br />
 
-``$ ros2 service call /stcamera_launch/dev_CAMERA-NS/get_genicam_node_info stcamera_msgs/srv/GetGenICamNodeInfo "{genicam_module: 'RemoteDevice', genicam_node: 'Width'}"``
+```
+ros2 service call /stcamera_launch/dev_CAMERA-NS/get_genicam_node_info stcamera_msgs/srv/GetGenICamNodeInfo "{genicam_module: 'RemoteDevice', genicam_node: 'Width'}"
+```
 
 <pre>
 requester: making request: stcamera_msgs.srv.GetGenICamNodeInfo_Request(genicam_module='RemoteDevice', genicam_node='Width')
@@ -192,33 +212,42 @@ stcamera_msgs.srv.GetGenICamNodeInfo_Response(name='Width', description='Width o
 
 * Generates a StCameraNode.
 
-``$ cd ~/dev_ws``
-
-``$ source install/setup.bash``
-
-``$ ros2 launch stcamera_launch stcamera_launch.py``
+```
+cd ~/dev_ws
+source install/setup.bash
+ros2 launch stcamera_launch stcamera_launch.py
+```
 
 * Check the name of the current published topic.
-
-``$ ros2 topic list``
+```
+ros2 topic list
+```
 
 * Run rqt_image_view and select/xxxx/xxxx/image_raw to view the images.<br />
 
-``$ ros2 run rqt_image_view rqt_image_view``
+```
+ros2 run rqt_image_view rqt_image_view
+```
 
-** If the camera is in trigger mode, no images can be captured until a trigger is generated. Discard the node, switch to free run mode with StViewer, etc., and check again.
+**If the camera is in trigger mode, no images can be captured until a trigger is generated. Discard the node, switch to free run mode with StViewer, etc., and check again.**
 
 * You can check the currently issued service and its type with a command like this:
 
-``$ ros2 service list -t``
+```
+ros2 service list -t
+```
 
 * You can check the type details with a command like this:
 
-``ros2 interface show stcamera_msgs/srv/GetGenICamNodeInfo``
+```
+ros2 interface show stcamera_msgs/srv/GetGenICamNodeInfo
+```
 
 * Get information for GenICam node "Gain".
 
-``$ ros2 service call /stcamera_launch/dev_142100000000/get_genicam_node_info stcamera_msgs/srv/GetGenICamNodeInfo '{genicam_module: "RemoteDevice", genicam_node: "Gain"}'``
+```
+ros2 service call /stcamera_launch/dev_142100000000/get_genicam_node_info stcamera_msgs/srv/GetGenICamNodeInfo '{genicam_module: "RemoteDevice", genicam_node: "Gain"}'
+```
 
 <pre>
 waiting for service to become available...
@@ -230,7 +259,9 @@ stcamera_msgs.srv.GetGenICamNodeInfo_Response(error_info=stcamera_msgs.msg.Error
 
 * Reads the value of the GenICam node "Gain" (of type IFloat).<br />
 
-``$ ros2 service call /stcamera_launch/dev_142100000000/read_node_float stcamera_msgs/srv/ReadNodeFloat '{genicam_module: "RemoteDevice", genicam_node: "Gain"}'``<br /> 
+```
+ros2 service call /stcamera_launch/dev_142100000000/read_node_float stcamera_msgs/srv/ReadNodeFloat '{genicam_module: "RemoteDevice", genicam_node: "Gain"}'
+```
 
 <pre>
 waiting for service to become available...
@@ -242,7 +273,9 @@ stcamera_msgs.srv.ReadNodeFloat_Response(error_info=stcamera_msgs.msg.ErrorInfo(
 
 * Set the GenICam node "Gain" (type IFloat) to 100.<br />
 
-``$ ros2 service call /stcamera_launch/dev_142100000000/write_node_float stcamera_msgs/srv/WriteNodeFloat '{genicam_module: "RemoteDevice", genicam_node: "Gain", value: 100}'``<br /> 
+```
+ros2 service call /stcamera_launch/dev_142100000000/write_node_float stcamera_msgs/srv/WriteNodeFloat '{genicam_module: "RemoteDevice", genicam_node: "Gain", value: 100}'
+```
 
 <pre>
 requester: making request: stcamera_msgs.srv.WriteNodeFloat_Request(genicam_module='RemoteDevice', genicam_node='Gain', value=100.0)
