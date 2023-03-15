@@ -34,7 +34,7 @@
     # camera_to_connect: ["STC-MCS510U3V(00C0XX)", "00:11:1c:f6:yy:xx"]
     # #namespace would be: dev_STC_MCS510U3V_00C0XXX_ and dev_00_11_1c_f6_yy_xx
     camera_to_connect: ["all"]
-    #camera_to_connect: ["1421010001"]
+    #camera_to_connect: ["142100000000"]
 
     # logger_level: value
     # value: Logger level of the main and camera nodes.
