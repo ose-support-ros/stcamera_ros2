@@ -10,7 +10,7 @@ You can use ROS2 topics and services to retrieve images from the camera, configu
 This package has been tested on ROS2-Humble Hawksbill (Ubuntu 22.04 64bit).
 This package uses SentechSDK (v 1.2.1 or later), so please install SentechSDK before installing this package. If you are new to the SetenchSDK, you can check out the documentation that comes with the SentechSDK and make sure that the SentechSDK's Viewer (StViewer) can capture images from your camera to make the rest of the process go smoothly. Also, if you use StViewer to change a camera's settings in advance and then use UserSetSave/UserSetDefault to save those settings to the camera, you may not need to set the camera in ROS2. You can download the SentechSDK from the following URL:
 
-https://sentech.co.jp/products/USB/software.html.
+https://sentech.co.jp/en/data/.
 
 For more information about how to install and use the SentechSDK, see the documentation that accompanies the SentechSDK.
  If the environment variables for using the SentechSDK are not set, run the following command (if you installed the SentechSDK in/opt/sentech):

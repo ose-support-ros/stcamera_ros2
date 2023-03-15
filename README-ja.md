@@ -9,7 +9,7 @@ ROS2のトピックやサービスを使用して、カメラから画像の取�
 本パッケージはUbuntu 22.04 64ビット上のROS2-Humble Hawksbillで動作確認を行っております。
 本パッケージはSentechSDK(v1.2.1以降)を利用するため、本パッケージをインストールする前に、予めSentechSDKをインストールしてください。SetenchSDKを初めて使用される場合は、SentechSDK付属のドキュメントをご覧の上、SentechSDKのViewer(StViewer)でカメラからの画像が取得できることを確認しておくと、後の作業がスムーズに行えます。また、StViewerを使用して予めカメラの設定を変更し、UserSetSave/UserSetDefaultを使用してカメラにその設定を保存しておくことで、ROS2でのカメラ設定が不要になる場合があります。SentechSDKは、下記のURLからダウンロード可能です。
 
-https://sentech.co.jp/data/software/
+https://sentech.co.jp/data/
 
 SentechSDKのインストール方法や使用方法の詳細については、SentechSDKに付属の資料をご参照ください。
 SentechSDKを使用するための環境変数が未設定の場合は、下記のようなコマンドを実行して下さい（SentechSDKを/opt/sentechにインストールした場合）。
