@@ -99,6 +99,6 @@ namespace stcamera
       nh->get_parameter("logger_level", value);
       return((rclcpp::Logger::Level)value);
     }
-    return(rclcpp::Logger::Level::Debug);
+    return(rclcpp::Logger::Level::Info);
   }
 } // end of namespace stcamera
