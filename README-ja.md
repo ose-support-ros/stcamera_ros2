@@ -78,7 +78,7 @@ ros2 component load /ComponentManager  -n 'stcameras' --node-namespace '/stcamer
 ```
 
 2番目、3番目の方法で記載されているノード名やネームスペースの指定はオプションですが、上記のように指定しておくことで、サンプルプログラムを動作させることができるようになります。
-StCameraNodeをstcamera_launchファイルスクリプトで起動するとカメラ接続パラメータがstcamera_node.yamlで簡単に設定できます。 パラメータ設定の詳細は次の章を参照下さい。
+StCameraNodeをstcamera_launchファイルスクリプトで起動するとカメラ接続パラメータがdefault.yaml(./install/stcamera_launch/share/stcamera_launch/config/)で簡単に設定できます。 パラメータ設定の詳細は次の章を参照下さい。
 
 ### 3.1. ノードパラメータ
 パラメータの値は大文字と小文字を区別します。設定できるパラメータは下記の通りです。

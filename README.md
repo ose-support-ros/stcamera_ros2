@@ -80,7 +80,7 @@ ros2 component load /ComponentManager  -n 'stcameras' --node-namespace '/stcamer
 ```
 
 The node names and name spaces listed in the second and third methods are optional, but you can make the sample program work by specifying them as above.
-If you start StCameraNode with the stcamera_launch file script, you can easily set camera connection parameters in stcamera_node.yaml. See the next chapter for details on setting parameters.
+If you start StCameraNode with the stcamera_launch file script, you can easily set camera connection parameters in default.yaml(./install/stcamera_launch/share/stcamera_launch/config/). See the next chapter for details on setting parameters.
 
 ### 3.1. Node Parameters
 Parameter values are case sensitive. The parameters that can be set are as follows.
